@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <title>TEDx Ulaanbaatar Empathy School Youth 2026</title>
+
+  <link rel="icon" type="image/png" href="logo-white.png">
+  <link rel="apple-touch-icon" href="logo-white.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Reset & Prevent Horizontal Scroll */
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    /* Navigation Alignment Styles */
+    header.nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(8, 8, 8, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      position: relative;
+    }
+    .brand-logo-container {
+      display: flex;
+      align-items: center;
+      z-index: 1001;
+      flex-shrink: 0 !important;
+    }
+    .brand-logo-img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    nav.nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    nav.nav-links a {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-muted, #A1A1AA);
+      transition: color 0.25s ease;
+      text-decoration: none;
+    }
+    nav.nav-links a:hover, nav.nav-links a.active { 
+      color: var(--text-white, #FFFFFF); 
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: 12px;
+    }
+
+    .lang-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.08));
+      color: var(--text-muted, #A1A1AA);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lang-toggle-btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #FFFFFF;
+    }
+
+    /* Centered & Reinforced Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 10001 !important;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      align-self: center;
+      flex-shrink: 0 !important;
+      gap: 5px;
+    }
+    .mobile-menu-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: #FFFFFF;
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .mobile-menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* Mobile Responsive Breakpoints & Navigation Drawer */
+    @media (max-width: 992px) {
+      .mobile-menu-btn { 
+        display: flex !important; 
+        margin-left: auto;
+      }
+
+      nav.nav-links {
+        display: flex !important;
+        position: fixed !important;
+        top: 0 !important; 
+        right: -100% !important;
+        width: 85vw !important;
+        max-width: 320px !important;
+        height: 100vh !important;
+        height: 100dvh !important;
+        background: #0c0c0c !important;
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-left: 1px solid rgba(255, 255, 255, 0.1);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 90px 24px 30px !important;
+        gap: 16px !important;
+        transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.9);
+        z-index: 10000 !important;
+        overflow-y: auto;
+      }
+
+      nav.nav-links.nav-active {
+        right: 0 !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+      }
+
+      nav.nav-links a {
+        font-size: 16px !important;
+        width: 100%;
+        padding-bottom: 10px !important;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .nav-actions {
+        margin-left: 0;
+        margin-top: 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 14px;
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 12px 20px !important;
+        font-size: 12px !important;
+      }
+    }
+
+    /* Target small phones (screen widths <= 540px) */
+    @media (max-width: 540px) {
+      .hero-tagline {
+        font-size: 14px !important;
+        line-height: 1.4 !important;
+      }
+
+      .section-title {
+        font-size: 22px !important;
+      }
+
+      .hero-countdown .time-block span {
+        font-size: 22px !important;
+      }
+
+      .hero-countdown .time-block label {
+        font-size: 9px !important;
+      }
+
+      .hero-bottom-meta {
+        font-size: 11px !important;
+      }
+
+      .intro-quote {
+        font-size: 15px !important;
+      }
+
+      .intro-body p {
+        font-size: 13px !important;
+      }
+    }
+  </style>
+  <script src="index.js" defer></script>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="index.html" class="brand-logo-container" title="TEDx Ulaanbaatar Empathy School Youth">
+      <img src="logo-white.png" alt="TEDx Logo" class="brand-logo-img">
+    </a>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html#about" data-lang-en="About" data-lang-mn="Бидний тухай">About</a>
+      <a href="index.html#seats" data-lang-en="Seats" data-lang-mn="Суудал">Seats</a>
+      <a href="index.html#speakers" data-lang-en="Speakers" data-lang-mn="Илтгэгчид">Speakers</a>
+      <a href="library.html" data-lang-en="Talks" data-lang-mn="Илтгэлүүд">Talks</a>
+      <a href="team.html" data-lang-en="Team" data-lang-mn="Баг">Team</a>
+      <a href="apply.html" data-lang-en="Apply" data-lang-mn="Бүртгүүлэх" style="color:var(--ted-red); font-weight:700;">Apply</a>
+      <a href="index.html#contact" data-lang-en="Contact" data-lang-mn="Холбоо барих">Contact</a>
+      
+      <div class="nav-actions">
+        <button class="lang-toggle-btn" onclick="toggleLanguage()">
+          <span class="lang-en active" style="color:var(--ted-red);">EN</span> / <span class="lang-mn">MN</span>
+        </button>
+        <a href="index.html#seats" class="btn-primary" style="padding:8px 16px; font-size:11px;" data-lang-en="Reserve Seat" data-lang-mn="Суудал захиалах">Reserve Seat</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="hero">
+    <video class="hero-bg" autoplay muted loop playsinline preload="auto">
+      <source src="davinci_4k___maximum_quality_image_to_video_prompt__genera.mp4" type="video/mp4">
+    </video>
+
+    <div class="hero-overlay"></div>
+
+    <div class="wrap">
+      <div class="hero-content reveal">
+        
+        <div class="hero-brand-header">
+          <img src="logo-white.png" alt="TEDx Ulaanbaatar Empathy School Youth Logo">
+        </div>
+
+        <p class="hero-tagline" data-lang-en="14 voices. 100 seats. One day of live student ideas, teacher perspectives, and youth-led innovation in Ulaanbaatar." data-lang-mn="14 дуу хоолой. 100 суудал. Улаанбаатар хотын сурагчдын идэвхи санаачилга, багш нарын үзэл бодол, залуусын инновацийг түгээх нэг өдөр.">
+          14 voices. 100 seats. One day of live student ideas, teacher perspectives, and youth-led innovation in Ulaanbaatar.
+        </p>
+
+        <div class="hero-countdown" id="eventCountdown">
+          <div class="time-block">
+            <span id="days">00</span>
+            <label data-lang-en="Days" data-lang-mn="Өдөр">Days</label>
+          </div>
+          <div class="time-block">
+            <span id="hours">00</span>
+            <label data-lang-en="Hours" data-lang-mn="Цаг">Hours</label>
+          </div>
+          <div class="time-block">
+            <span id="mins">00</span>
+            <label data-lang-en="Mins" data-lang-mn="Минут">Mins</label>
+          </div>
+          <div class="time-block">
+            <span id="secs">00</span>
+            <label data-lang-en="Secs" data-lang-mn="Секунд">Secs</label>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <a href="#seats" class="btn-primary" data-lang-en="Reserve Your Seat" data-lang-mn="Суудлаа захиалах">Reserve Your Seat</a>
+          <a href="#speakers" class="btn-secondary" data-lang-en="Meet The Speakers" data-lang-mn="Илтгэгчидтэй танилцах">Meet The Speakers</a>
+        </div>
+
+        <div class="hero-bottom-meta" data-lang-en="SATURDAY, OCTOBER 24, 2026 <span>•</span> ULAANBAATAR EMPATHY SCHOOL, MONGOLIA" data-lang-mn="2026 ОНЫ 10-Р САРЫН 24, БЯМБА ГАРАГ <span>•</span> УЛААНБААТАР ЭМПАТИ СУРГУУЛЬ, МОНГОЛ">
+          SATURDAY, OCTOBER 24, 2026 <span>•</span> ULAANBAATAR EMPATHY SCHOOL, MONGOLIA
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="about">
+    <div class="wrap">
+      
+      <div class="reveal">
+        <div class="section-tag" data-lang-en="01 / Event Overview" data-lang-mn="01 / Үйл ажиллагааны тухай">01 / Event Overview</div>
+        <h2 class="section-title" data-lang-en="Ideas Worth Spreading" data-lang-mn="Үнэ цэнэтэй санаануудыг түгээх">Ideas Worth Spreading</h2>
+
+        <div class="intro-grid">
+          <div class="intro-quote" data-lang-en="&quot;Empathy isn't just something you feel. <span>It's the willingness to stop, listen, and see the world through someone else's eyes.&quot;</span>" data-lang-mn="&quot;Эмпати гэдэг нь зөвхөн мэдрэхүйн асуудал биш. <span>Энэ нь ойлгон сонсож, ертөнцийг өөр хүний нүдээр харах хүсэл эрмэлзэл юм.&quot;</span>">
+            "Empathy isn't just something you feel. <span>It's the willingness to stop, listen, and see the world through someone else's eyes."</span>
+          </div>
+          <div class="intro-body">
+            <p data-lang-en="We are a team of student organizers at Ulaanbaatar Empathy School creating a platform where youth voices, young innovators, and passionate educators take center stage." data-lang-mn="Бид Улаанбаатар Эмпати Сургуулийн сурагчдын зохион байгууласан баг бөгөөд залуусын дуу хоолой, шинийг санаачлагчид, хүсэл тэмүүлэлтэй сурган хүмүүжүүлэгчдийг тайзан дээр гаргах платформыг бүрдүүлж байна.">We are a team of student organizers at Ulaanbaatar Empathy School creating a platform where youth voices, young innovators, and passionate educators take center stage.</p>
+            <p data-lang-en="On Saturday, October 24, 2026, our school assembly hall will bring together 100 attendees for a day of live presentations, curated TEDTalks videos, and deep conversations." data-lang-mn="2026 оны 10-р сарын 24-ний Бямба гарагт манай сургуулийн урлаг зааланд 100 оролцогч цугларч, амьд илтгэлүүд, сонгомол TEDTalks бичлэгүүд үзэж, гүн гүнзгий хэлэлцүүлэг өрнүүлэх болно.">On Saturday, October 24, 2026, our school assembly hall will bring together 100 attendees for a day of live presentations, curated TEDTalks videos, and deep conversations.</p>
+          </div>
+        </div>
+
+        <div class="tedx-compliance-card">
+          <h3 data-lang-en="What is TEDx?" data-lang-mn="TEDx гэж юу вэ?">What is TEDx?</h3>
+          <p data-lang-en="In the spirit of ideas worth spreading, TED has created a program called TEDx. TEDx is a program of local, self-organized events that bring people together to share a TED-like experience. Our event is called <strong>TEDxUlaanbaatar Empathy School Youth</strong>, where x = independently organized TED event. At our TEDxUlaanbaatar Empathy School Youth event, TEDTalks video and live speakers will combine to spark deep discussion and connection in a small group. The TED Conference provides general guidance for the TEDx program, but individual TEDx events, including ours, are self-organized." data-lang-mn="Түгээх үнэ цэнэтэй санааг дэмжих зорилгоор TED нь TEDx хэмээх хөтөлбөрийг бий болгосон. TEDx бол орон нутгийн түвшинд бие даан зохион байгуулагддаг, хүмүүсийг нэгтгэн TED-тэй ижил туршлагыг хуваалцах хөтөлбөр юм. Бидний арга хэмжээг <strong>TEDxUlaanbaatar Empathy School Youth</strong> гэж нэрлэдэг бөгөөд x = бие даан зохион байгуулагдсан TED арга хэмжээ гэсэн үг юм. Манай арга хэмжээнд TEDTalks бичлэгүүд болон амьд илтгэгчид хосолж, жижиг бүлэгт гүнзгий хэлэлцүүлэг, холбоо үүсгэх болно. TED Конфренц нь TEDx хөтөлбөрт ерөнхий удирдамж өгдөг боловч манайхтай адил хувь хүмүүсийн зохион байгуулж буй TEDx арга хэмжээнүүд нь бие даасан байдаг.">In the spirit of ideas worth spreading, TED has created a program called TEDx. TEDx is a program of local, self-organized events that bring people together to share a TED-like experience. Our event is called <strong>TEDxUlaanbaatar Empathy School Youth</strong>, where x = independently organized TED event. At our TEDxUlaanbaatar Empathy School Youth event, TEDTalks video and live speakers will combine to spark deep discussion and connection in a small group. The TED Conference provides general guidance for the TEDx program, but individual TEDx events, including ours, are self-organized.</p>
+          <p data-lang-en="Learn more about the global <a href=&quot;https://www.ted.com/tedx&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;tedx-program-link&quot;>TEDx Program →</a>" data-lang-mn="Олон улсын <a href=&quot;https://www.ted.com/tedx&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;tedx-program-link&quot;>TEDx хөтөлбөрийн →</a> талаар илүү ихийг мэдэж аваарай.">Learn more about the global <a href="https://www.ted.com/tedx" target="_blank" rel="noopener" class="tedx-program-link">TEDx Program →</a></p>
+        </div>
+
+        <div class="venue-info-card">
+          <div class="venue-text">
+            <h4 data-lang-en="Venue: Ulaanbaatar Empathy School Assembly Hall" data-lang-mn="Байршил: Улаанбаатар Эмпати Сургуулийн Урлаг Заал">Venue: Ulaanbaatar Empathy School Assembly Hall</h4>
+            <p data-lang-en="Our event takes place in the main multi-purpose assembly hall of Ulaanbaatar Empathy School, equipped with modern audiovisual systems, a stage, and an interactive horseshoe-style arrangement designed to spark connection between speakers and audience members." data-lang-mn="Манай арга хэмжээ Улаанбаатар Эмпати Сургуулийн орчин үеийн дуу дүрсний системтэй, тайзтай, илтгэгч болон үзэгчдийн хооронд харилцаа үүсгэхэд зориулагдсан тах хэлбэрийн зохион байгуулалттай урлаг зааланд болно.">Our event takes place in the main multi-purpose assembly hall of Ulaanbaatar Empathy School, equipped with modern audiovisual systems, a stage, and an interactive horseshoe-style arrangement designed to spark connection between speakers and audience members.</p>
+            <div class="venue-meta-badge" data-lang-en="📍 Bayanzurkh District, Ulaanbaatar, Mongolia" data-lang-mn="📍 Монгол Улс, Улаанбаатар хот, Баянзүрх дүүрэг">📍 Bayanzurkh District, Ulaanbaatar, Mongolia</div>
+          </div>
+          <div>
+            <img src="ubempathy.jpg" alt="Ulaanbaatar Empathy School Campus" style="width:100%; height:180px; object-fit:cover; border-radius:8px; border:1px solid var(--border-subtle);">
+          </div>
+        </div>
+
+      </div>
+
+      <div class="seat-section-wrapper reveal" id="seats">
+        <div class="seat-header">
+          <div>
+            <h3 style="font-size:19px; font-weight:800;" data-lang-en="Hall Seat Availability" data-lang-mn="Танхимын суудлын мэдээлэл">Hall Seat Availability</h3>
+            <p style="font-size:12.5px; color:var(--text-muted); margin-top:2px;" data-lang-en="Tap any available seat to reserve your spot." data-lang-mn="Сул суудал дээр дарж суудлаа захиална уу.">Tap any available seat to reserve your spot.</p>
+          </div>
+          
+          <div class="seat-counter-badge">
+            <div class="num" id="remainingCount">25</div>
+            <div style="text-align:left;">
+              <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; color:var(--text-white);" data-lang-en="Seats Remaining" data-lang-mn="Үлдсэн суудал">Seats Remaining</div>
+              <div style="font-size:10.5px; color:var(--text-muted);" data-lang-en="out of 100 capacity" data-lang-mn="Нийт 100 суудлаас">out of 100 capacity</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seat-controls-bar">
+          <label for="seatSlider" data-lang-en="View Zoom:" data-lang-mn="Томруулах:">View Zoom:</label>
+          <input type="range" class="seat-slider" id="seatSlider" min="15" max="32" value="22" oninput="setSeatSize(this.value)">
+        </div>
+
+        <div class="stage-wrapper">
+          <div class="screen-bar"></div>
+          <div class="screen-label" data-lang-en="MAIN PODIUM / STAGE" data-lang-mn="ГОЛ ТАЙЗ">MAIN PODIUM / STAGE</div>
+        </div>
+
+        <div class="theater-3d-stage">
+          <div class="theater-layout">
+            <div class="wing-block block-left">
+              <div class="wing-title" data-lang-en="Left Wing (30)" data-lang-mn="Зүүн жигүүр (30)">Left Wing (30)</div>
+              <div class="seat-grid-left" id="gridLeft"></div>
+            </div>
+
+            <div class="wing-block block-center">
+              <div class="wing-title" data-lang-en="Center Main (40)" data-lang-mn="Төв хэсэг (40)">Center Main (40)</div>
+              <div class="seat-grid-center" id="gridCenter"></div>
+            </div>
+
+            <div class="wing-block block-right">
+              <div class="wing-title" data-lang-en="Right Wing (30)" data-lang-mn="Баруун жигүүр (30)">Right Wing (30)</div>
+              <div class="seat-grid-right" id="gridRight"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="seat-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:#27272A;"></div> <span data-lang-en="Available" data-lang-mn="Боломжтой">Available</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--ted-red);"></div> <span data-lang-en="Selected" data-lang-mn="Сонгосон">Selected</span>
+          </div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:rgba(255, 255, 255, 0.08);"></div> <span data-lang-en="Taken" data-lang-mn="Захиалагдсан">Taken</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="page-section" id="speakers">
+    <div class="wrap reveal">
+      <div class="section-tag" data-lang-en="02 / On Stage" data-lang-mn="02 / Тайзнаа">02 / On Stage</div>
+      <h2 class="section-title" style="margin-bottom:16px;" data-lang-en="14 Live Speakers" data-lang-mn="14 Илтгэгч">14 Live Speakers</h2>
+
+      <div class="speakers-header-wrapper">
+        <div class="speaker-category-pills">
+          <div class="cat-pill"><span>6</span> <span data-lang-en="Student Speakers" data-lang-mn="Сурагч илтгэгч">Student Speakers</span></div>
+          <div class="cat-pill"><span>4</span> <span data-lang-en="Local Teachers" data-lang-mn="Багш нар">Local Teachers</span></div>
+          <div class="cat-pill"><span>4</span> <span data-lang-en="External Speakers" data-lang-mn="Зочин илтгэгч">External Speakers</span></div>
+        </div>
+
+        <div class="scroll-controls">
+          <button class="scroll-btn" onclick="scrollSpeakers(-260)" aria-label="Scroll left">←</button>
+          <button class="scroll-btn" onclick="scrollSpeakers(260)" aria-label="Scroll right">→</button>
+        </div>
+      </div>
+
+      <div class="speakers-scroll-container" id="speakerContainer"></div>
+    </div>
+  </section>
+
+  <section class="page-section" id="schedule">
+    <div class="wrap reveal">
+      <div class="section-tag" data-lang-en="03 / Timetable" data-lang-mn="03 / Цагийн хуваарь">03 / Timetable</div>
+      <h2 class="section-title" data-lang-en="Event Schedule (Coming Soon)" data-lang-mn="Арга хэмжээний хөтөлбөр (Тун удахгүй)">Event Schedule (Coming Soon)</h2>
+      <p style="color:var(--text-muted); margin-bottom: 24px;" data-lang-en="Click on a session below to view details." data-lang-mn="Доорх хэсэгт дарж дэлгэрэнгүй хуваарийг харна уу.">Click on a session below to view details.</p>
+
+      <div class="schedule-container">
+        
+        <div class="session-block tilt-card">
+          <div class="session-header" onclick="toggleSchedule(this)">
+            <div>
+              <h3 data-lang-en="Morning Doors & Rehearsal" data-lang-mn="Өглөөний бүртгэл & Бэлтгэл">Morning Doors & Rehearsal</h3>
+              <span class="session-badge">08:00 AM – 10:15 AM</span>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          
+          <div class="session-items">
+            <div class="schedule-row">
+              <div class="time-col">08:00 AM – 09:00 AM</div>
+              <div class="info-col">
+                <div class="event-title" data-lang-en="Team & Speaker Preparation" data-lang-mn="Баг болон Илтгэгчдийн бэлтгэл">Team & Speaker Preparation</div>
+              </div>
+            </div>
+            <div class="schedule-row">
+              <div class="time-col">09:30 AM – 10:15 AM</div>
+              <div class="info-col">
+                <div class="event-title" data-lang-en="Registration & Check-In" data-lang-mn="Бүртгэл & Хүлээн авалт">Registration & Check-In</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="session-block tilt-card">
+          <div class="session-header" onclick="toggleSchedule(this)">
+            <div>
+              <h3 data-lang-en="SESSION 1 — Local Roots & Discovery" data-lang-mn="ХЭСЭГ 1 — Орон нутгийн үнэ цэнэ">SESSION 1 — Local Roots & Discovery</h3>
+              <span class="session-badge">10:15 AM – 11:21 AM</span>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          
+          <div class="session-items">
+            <div class="schedule-row">
+              <div class="time-col">10:15 AM</div>
+              <div class="info-col">
+                <div class="event-title" data-lang-en="Opening & Welcome" data-lang-mn="Нээлтийн үйл ажиллагаа">Opening & Welcome</div>
+              </div>
+            </div>
+            <div class="schedule-row">
+              <div class="time-col">10:20 AM – 11:20 AM</div>
+              <div class="info-col">
+                <div class="event-title" data-lang-en="Speaker Block 1 (Coming Soon)" data-lang-mn="Илтгэгчид 1 (Тун удахгүй)">Speaker Block 1 (Coming Soon)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="session-block tilt-card">
+          <div class="session-header" onclick="toggleSchedule(this)">
+            <div>
+              <h3 data-lang-en="SESSION 2 — Science, Technology & Systems" data-lang-mn="ХЭСЭГ 2 — Шинжлэх ухаан, Технологи">SESSION 2 — Science, Technology & Systems</h3>
+              <span class="session-badge">12:00 PM – 01:12 PM</span>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          
+          <div class="session-items">
+            <div class="schedule-row">
+              <div class="time-col">12:00 PM – 01:12 PM</div>
+              <div class="info-col">
+                <div class="event-title" data-lang-en="Speaker Block 2 (Coming Soon)" data-lang-mn="Илтгэгчид 2 (Тун удахгүй)">Speaker Block 2 (Coming Soon)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="session-block tilt-card">
+          <div class="session-header" onclick="toggleSchedule(this)">
+            <div>
+              <h3 data-lang-en="SESSION 3 — Mind, Culture & Society" data-lang-mn="ХЭСЭГ 3 — Оюун ухаан, Соёл, Нийгэм">SESSION 3 — Mind, Culture & Society</h3>
+              <span class="session-badge">02:15 PM – 03:18 PM</span>
+            </div>
+            <div class="toggle-icon">+</div>
+          </div>
+          
+          <div class="session-items">
+            <div class="schedule-row">
+              <div class="time-col">02:15 PM – 03:18 PM</div>
+              <div class="info-col">
+                <div class="event-title" data-lang-en="Speaker Block 3 (Coming Soon)" data-lang-mn="Илтгэгчид 3 (Тун удахгүй)">Speaker Block 3 (Coming Soon)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="page-section" id="contact">
+    <div class="wrap reveal">
+      <div class="section-tag" data-lang-en="04 / Get In Touch" data-lang-mn="04 / Холбоо барих">04 / Get In Touch</div>
+      <h2 class="section-title" data-lang-en="Reach Out to Our Team" data-lang-mn="Бидэнтэй холбогдох">Reach Out to Our Team</h2>
+
+      <div class="contact-grid">
+        <div class="contact-form-card tilt-card">
+          <h3 class="form-heading" data-lang-en="Send a Message" data-lang-mn="Зурвас илгээх">Send a Message</h3>
+          <form id="contactForm" onsubmit="handleFormSubmit(event)">
+            <div class="form-group">
+              <label for="fullName" data-lang-en="Your Name" data-lang-mn="Таны нэр">Your Name</label>
+              <input type="text" id="fullName" required placeholder="e.g. Anujin Batbayar" data-lang-en="e.g. Anujin Batbayar" data-lang-mn="Жнь: Анужин Батбаяр">
+            </div>
+
+            <div class="form-group">
+              <label for="emailAddress" data-lang-en="Email Address" data-lang-mn="И-мэйл хаяг">Email Address</label>
+              <input type="email" id="emailAddress" required placeholder="e.g. name@example.com" data-lang-en="e.g. name@example.com" data-lang-mn="Жнь: name@example.com">
+            </div>
+
+            <div class="form-group">
+              <label for="message" data-lang-en="Message / Question" data-lang-mn="Таны зурвас">Message / Question</label>
+              <textarea id="message" rows="4" required placeholder="How can we help you?" data-lang-en="How can we help you?" data-lang-mn="Бид танд хэрхэн туслах вэ?"></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width:100%;" data-lang-en="Send Message" data-lang-mn="Илгээх">Send Message</button>
+            <div id="formSuccess" style="display:none; margin-top:16px; padding:12px; background:rgba(235,0,40,0.2); border:1px solid var(--ted-red); border-radius:6px; font-size:13px; text-align:center;" data-lang-en="Message received! We'll reply shortly." data-lang-mn="Зурвас хүлээн авлаа! Бид удахгүй хариу өгөх болно.">
+              Message received! We'll reply shortly.
+            </div>
+          </form>
+        </div>
+
+        <div class="contact-info-card tilt-card">
+          <h3 class="form-heading" data-lang-en="Organizers (Hover for Bio)" data-lang-mn="Зохион байгуулагчид">Organizers (Hover for Bio)</h3>
+          
+          <div class="organizer-hover-card">
+            <div class="org-front">
+              <span style="font-weight:700; font-size:14.5px;">Munkhtushig</span>
+              <span class="role-badge" data-lang-en="ORGANIZER" data-lang-mn="ЗОХИОН БАЙГУУЛАГЧ">ORGANIZER</span>
+            </div>
+            <div class="org-back" data-lang-en="🧬 student who loves to learn more. Highly disciplined and ambitious, dedicated to bringing youth ideas to life!" data-lang-mn="🧬 Биологийн чиглэлээр суралцдаг. Маш сахилга баттай, амбицтай бөгөөд залуусын санааг бодит болгох эрмэлзэлтэй!">
+              🧬 Student who loves to learn more. Highly disciplined and ambitious, dedicated to bringing youth ideas to life!
+            </div>
+          </div>
+
+          <div class="organizer-hover-card">
+            <div class="org-front">
+              <span style="font-weight:700; font-size:14.5px;">Munkherdene</span>
+              <span class="role-badge" data-lang-en="CO-ORGANIZER" data-lang-mn="ХАМТРАН ЗОХИОН БАЙГУУЛАГЧ">CO-ORGANIZER</span>
+            </div>
+            <div class="org-back" data-lang-en="🚀 Tech director & event coordinator. Dedicated to building smooth, impactful youth-led events!" data-lang-mn="🚀 Технологийн найруулагч, арга хэмжээ зохицуулагч. Залууст чиглэсэн нөлөөлөхүйц арга хэмжээ зохион байгуулах хүсэлтэй!">
+              🚀 Tech director & event coordinator. Dedicated to building smooth, impactful youth-led events!
+            </div>
+          </div>
+
+          <div style="margin-top:20px;">
+            <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:6px;">
+              <strong data-lang-en="Email:" data-lang-mn="И-мэйл:">Email:</strong> <a href="mailto:sergelenmunkhtushig@gmail.com" style="color:var(--ted-red);">sergelenmunkhtushig@gmail.com</a>
+            </p>
+            <p style="font-size:13.5px; color:var(--text-muted); margin-bottom:6px;">
+              <strong data-lang-en="Instagram:" data-lang-mn="Инстаграм:">Instagram:</strong> <a href="https://www.instagram.com/tedxempathyschool_youth/" target="_blank" rel="noopener" style="color:var(--ted-red);">@tedxempathyschool_youth</a>
+            </p>
+            <p style="font-size:13.5px; color:var(--text-muted);">
+              <strong data-lang-en="Location:" data-lang-mn="Байршил:">Location:</strong> <span data-lang-en="Ulaanbaatar Empathy School, Ulaanbaatar, Mongolia" data-lang-mn="Улаанбаатар Эмпати Сургууль, Улаанбаатар хот, Монгол Улс">Ulaanbaatar Empathy School, Ulaanbaatar, Mongolia</span>
+            </p>
+          </div>
+          <div class="map-container">
+            <iframe 
+              src="https://maps.google.com/maps?q=Ulaanbaatar%20Empathy%20School&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+              allowfullscreen="" 
+              loading="lazy" 
+              title="Location Map"
+              referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="modal-overlay" id="speakerModal" onclick="handleModalOverlayClick(event)">
+  <div class="modal-card">
+    <button class="modal-close" onclick="closeSpeakerModal()" aria-label="Close modal">×</button>
+    <div class="speaker-tag-label" id="modalTag" data-lang-en="Student Speaker" data-lang-mn="Сурагч илтгэгч">Student Speaker</div>
+    <div id="modalNum" style="font-family:var(--font-mono); color:var(--ted-red); font-size:12px; margin-top:4px;">Speaker #01</div>
+    <h3 id="modalName" style="font-size:20px; font-weight:800; margin:8px 0;" data-lang-en="To Be Announced" data-lang-mn="Тун удахгүй зарлагдана">To Be Announced</h3>
+    <p id="modalDesc" style="color:var(--text-muted); font-size:13.5px; margin-bottom:18px; line-height:1.5;" data-lang-en="Full speaker bios and talk summaries will be posted on our Instagram page prior to October 24, 2026." data-lang-mn="Илтгэгчдийн дэлгэрэнгүй мэдээлэл болон илтгэлийн хураангуйг 2026 оны 10-р сарын 24-нөөс өмнө бидний Инстаграм хуудсанд нийтлэх болно.">Full speaker bios and talk summaries will be posted on our Instagram page prior to October 24, 2026.</p>
+    <button class="btn-primary" onclick="closeSpeakerModal()" style="width:100%;" data-lang-en="Close" data-lang-mn="Хаах">Close</button>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="brand-logo" style="margin-bottom:16px;">
+      <img src="logo-white.png" alt="TEDx Ulaanbaatar Empathy School Youth Logo">
+    </div>
+    <div class="footer-legal">
+      <div data-lang-en="This independent TEDx event is operated under license from TED." data-lang-mn="Энэхүү бие даасан TEDx арга хэмжээ нь TED-ийн тусгай зөвшөөрлийн дагуу зохион байгуулагдаж байна.">This independent TEDx event is operated under license from TED.</div>
+      <div><strong>TEDxUlaanbaatar Empathy School Youth</strong> © 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+
+    if (menuBtn && navLinks) {
+      menuBtn.onclick = function(e) {
+        e.stopPropagation();
+        navLinks.classList.toggle('nav-active');
+        menuBtn.classList.toggle('active');
+      };
+
+      // Auto close drawer when clicking any nav item
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.onclick = function() {
+          navLinks.classList.remove('nav-active');
+          menuBtn.classList.remove('active');
+        };
+      });
+    }
+  });
+</script>
+</body>
+</html>

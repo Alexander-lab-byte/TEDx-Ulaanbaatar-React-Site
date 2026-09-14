@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "TEDx Ulaanbaatar Empathy School Youth"
+description = "A bilingual TEDx event website for Ulaanbaatar Empathy School Youth 2026, with event information, seat reservations, speakers, talks, team details, and applications."
+version = "1.0.0"
+id = "artifacts/tedx-ub-empathy"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21477
+
+[services.development]
+run = "pnpm --filter @workspace/tedx-ub-empathy run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/tedx-ub-empathy", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/tedx-ub-empathy/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21477"
+BASE_PATH = "/"

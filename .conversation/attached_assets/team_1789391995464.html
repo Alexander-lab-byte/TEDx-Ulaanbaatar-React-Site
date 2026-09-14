@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizing Team | TEDxEvent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --ted-red: #EB0028;
+      --ted-red-hover: #FF1A40;
+      --ted-red-glow: rgba(235, 0, 40, 0.35);
+      
+      --bg-black: #080808;
+      --bg-card: #141414;
+      --bg-card-alt: #1A1A1A;
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(235, 0, 40, 0.4);
+      
+      --text-white: #FFFFFF;
+      --text-muted: #A1A1AA;
+      --text-dim: #71717A;
+      
+      --font-main: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'Space Grotesk', monospace;
+      --max-width: 1280px;
+      --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg-black);
+      color: var(--text-white);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; height: auto; }
+
+    .wrap {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* HEADER & LOGO */
+    header.nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      background: rgba(8, 8, 8, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 72px;
+      position: relative;
+    }
+    .brand-logo-container {
+      display: flex;
+      align-items: center;
+      z-index: 1001;
+    }
+    .brand-logo-img {
+      height: 32px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    /* NAVIGATION LINKS */
+    nav.nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    nav.nav-links a {
+      font-size: 13.5px;
+      font-weight: 600;
+      color: var(--text-muted);
+      transition: color 0.25s ease;
+    }
+    nav.nav-links a:hover, nav.nav-links a.active { color: var(--text-white); }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-left: 12px;
+    }
+
+    /* BUTTON STYLES */
+    .lang-toggle-btn {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .lang-toggle-btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text-white);
+    }
+
+    .btn-primary {
+      background: var(--ted-red);
+      color: var(--text-white) !important;
+      font-weight: 700;
+      border-radius: 100px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s ease, box-shadow 0.25s ease;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      background: var(--ted-red-hover);
+      box-shadow: 0 0 16px var(--ted-red-glow);
+    }
+
+    /* HAMBURGER MENU BUTTON FOR MOBILE */
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 1001;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .mobile-menu-btn span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background-color: var(--text-white);
+      border-radius: 2px;
+      transition: transform 0.3s var(--transition-smooth), opacity 0.3s ease;
+    }
+    .mobile-menu-btn.active span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    .mobile-menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .mobile-menu-btn.active span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+
+    /* HERO SECTION */
+    .team-hero {
+      position: relative;
+      padding: 160px 0 80px;
+      background: radial-gradient(circle at 50% 20%, rgba(235, 0, 40, 0.12) 0%, rgba(8, 8, 8, 0) 70%);
+      overflow: hidden;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(235, 0, 40, 0.1);
+      border: 1px solid var(--border-highlight);
+      padding: 6px 16px;
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--ted-red);
+      margin-bottom: 20px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--ted-red);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--ted-red);
+    }
+    .team-hero h1 {
+      font-size: clamp(32px, 5.5vw, 64px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .team-hero p {
+      font-size: clamp(15px, 2vw, 19px);
+      color: var(--text-muted);
+      max-width: 640px;
+      margin-bottom: 40px;
+    }
+
+    /* STATS OVERVIEW */
+    .team-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+    }
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-num {
+      font-family: var(--font-mono);
+      font-size: clamp(26px, 4vw, 32px);
+      font-weight: 700;
+      color: var(--ted-red);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      margin-top: 6px;
+    }
+
+    /* FILTER BAR */
+    .filter-wrapper {
+      position: sticky;
+      top: 72px;
+      z-index: 100;
+      background: rgba(8, 8, 8, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 48px;
+    }
+    .filter-pills {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-pills::-webkit-scrollbar { display: none; }
+    
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 8px 18px;
+      border-radius: 100px;
+      font-family: var(--font-main);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.3s var(--transition-smooth);
+      flex-shrink: 0;
+    }
+    .filter-btn:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--text-white);
+    }
+    .filter-btn.active {
+      background: var(--ted-red);
+      border-color: var(--ted-red);
+      color: var(--text-white);
+      box-shadow: 0 4px 16px var(--ted-red-glow);
+    }
+
+    /* DEPARTMENTS & CARDS */
+    .dept-section { margin-bottom: 64px; }
+    .dept-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .dept-title {
+      font-size: clamp(20px, 3vw, 24px);
+      font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .dept-divider {
+      flex: 1;
+      height: 1px;
+      background: var(--border-subtle);
+    }
+    .dept-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--ted-red);
+      background: rgba(235, 0, 40, 0.1);
+      padding: 3px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(235, 0, 40, 0.2);
+      white-space: nowrap;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .member-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.4s var(--transition-smooth), border-color 0.4s var(--transition-smooth), box-shadow 0.4s var(--transition-smooth);
+    }
+    .member-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--border-highlight);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.5), 0 0 20px rgba(235, 0, 40, 0.15);
+    }
+
+    .member-image-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1/1;
+      background: radial-gradient(circle, rgba(235, 0, 40, 0.15) 0%, rgba(26, 26, 26, 1) 80%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mystery-symbol {
+      font-family: var(--font-mono);
+      font-size: 56px;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.2);
+      transition: color 0.3s ease, transform 0.3s ease;
+      user-select: none;
+    }
+    .member-card:hover .mystery-symbol {
+      color: var(--ted-red);
+      transform: scale(1.15);
+    }
+
+    .member-info { padding: 20px; }
+    .member-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--ted-red);
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .member-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-white);
+      margin-bottom: 6px;
+    }
+    .member-bio {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #040404;
+      border-top: 1px solid var(--border-subtle);
+      padding: 40px 0 32px;
+      margin-top: 80px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-dim);
+    }
+
+    /* MOBILE & RESPONSIVE DESIGN (PRESERVES TEDx AESTHETIC) */
+    @media (max-width: 992px) {
+      .mobile-menu-btn { display: flex; }
+
+      nav.nav-links {
+        position: fixed;
+        top: 0; right: -100%;
+        width: 85%;
+        max-width: 360px;
+        height: 100vh;
+        background: rgba(12, 12, 12, 0.98);
+        backdrop-filter: blur(25px);
+        -webkit-backdrop-filter: blur(25px);
+        border-left: 1px solid var(--border-subtle);
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding: 100px 32px 40px;
+        gap: 20px;
+        transition: right 0.4s var(--transition-smooth);
+        box-shadow: -20px 0 40px rgba(0,0,0,0.8);
+      }
+
+      nav.nav-links.nav-active {
+        right: 0;
+      }
+
+      nav.nav-links a {
+        font-size: 18px;
+        width: 100%;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--border-subtle);
+      }
+
+      .nav-actions {
+        margin-left: 0;
+        margin-top: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        width: 100%;
+        gap: 16px;
+      }
+
+      .btn-primary {
+        width: 100%;
+        padding: 12px 20px !important;
+        font-size: 13px !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .wrap { padding: 0 16px; }
+      .team-hero { padding: 120px 0 50px; }
+      .team-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        padding: 18px;
+      }
+      .team-grid { grid-template-columns: 1fr; }
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR WITH RESPONSIVE MOBILE DRAWER -->
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a href="index.html" class="brand-logo-container">
+        <img src="logo-white.png" alt="TEDx Logo" class="brand-logo-img">
+      </a>
+      
+      <!-- MOBILE MENU HAMBURGER ICON -->
+<button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Navigation Menu">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html#about" data-lang-en="About" data-lang-mn="Бидний тухай">About</a>
+        <a href="index.html#seats" data-lang-en="Seats" data-lang-mn="Суудал">Seats</a>
+        <a href="index.html#speakers" data-lang-en="Speakers" data-lang-mn="Илтгэгчид">Speakers</a>
+        <a href="library.html" data-lang-en="Talks" data-lang-mn="Илтгэлүүд">Talks</a>
+        <a href="team.html" class="active" data-lang-en="Team" data-lang-mn="Баг">Team</a>
+        <a href="apply.html" data-lang-en="Apply" data-lang-mn="Бүртгүүлэх" style="color:var(--ted-red); font-weight:700;">Apply</a>
+        <a href="index.html#contact" data-lang-en="Contact" data-lang-mn="Холбоо барих">Contact</a>
+        
+        <div class="nav-actions">
+          <button class="lang-toggle-btn" onclick="toggleLanguage()">
+            <span class="lang-en active" style="color:var(--ted-red);">EN</span> / <span class="lang-mn">MN</span>
+          </button>
+          <a href="index.html#seats" class="btn-primary" style="padding:8px 16px; font-size:11px;" data-lang-en="Reserve Seat" data-lang-mn="Суудал захиалах">Reserve Seat</a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="team-hero">
+    <div class="wrap">
+      <div class="hero-badge" data-lang-en="Behind The Stage" data-lang-mn="Тайзны ард">Behind The Stage</div>
+      <h1 data-lang-en="Meet The Visionaries" data-lang-mn="Зохион байгуулах баг">Meet The Visionaries</h1>
+      <p data-lang-en="The dedicated team working behind the scenes to make this event happen." data-lang-mn="Энэхүү эвэнтэд зориулан тайзны ард ажиллаж буй манай баг хамт олон.">The dedicated team working behind the scenes to make this event happen.</p>
+      
+      <!-- STATS OVERVIEW -->
+      <div class="team-stats-grid">
+        <div class="stat-item">
+          <div class="stat-num">?</div>
+          <div class="stat-label" data-lang-en="Total Members" data-lang-mn="Нийт гишүүд">Total Members</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">04</div>
+          <div class="stat-label" data-lang-en="Departments" data-lang-mn="Албадууд">Departments</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">100%</div>
+          <div class="stat-label" data-lang-en="Volunteer Driven" data-lang-mn="Сайн дурын баг">Volunteer Driven</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">2026</div>
+          <div class="stat-label" data-lang-en="Edition Team" data-lang-mn="2026 оны баг">Edition Team</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STICKY FILTER BAR -->
+  <div class="filter-wrapper">
+    <div class="wrap">
+      <div class="filter-pills">
+        <button class="filter-btn active" data-filter="all" data-lang-en="All Departments" data-lang-mn="Бүх алба">All Departments</button>
+        <button class="filter-btn" data-filter="leadership" data-lang-en="Leadership" data-lang-mn="Удирдлага">Leadership</button>
+        <button class="filter-btn" data-filter="curation" data-lang-en="Curation" data-lang-mn="Куратор">Curation</button>
+        <button class="filter-btn" data-filter="media-design" data-lang-en="Media & Design" data-lang-mn="Медиа ба Дизайн">Media & Design</button>
+        <button class="filter-btn" data-filter="logistics" data-lang-en="Logistics" data-lang-mn="Логистик">Logistics</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN TEAM CONTENT -->
+  <main class="wrap">
+
+    <!-- LEADERSHIP -->
+    <section class="dept-section" data-dept="leadership">
+      <div class="dept-header">
+        <h2 class="dept-title" data-lang-en="Leadership" data-lang-mn="Удирдлага">Leadership</h2>
+        <div class="dept-divider"></div>
+        <span class="dept-count"><span data-lang-en="? Members" data-lang-mn="? Гишүүн">? Members</span></span>
+      </div>
+
+      <div class="team-grid">
+        <!-- ORGANIZER -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role" data-lang-en="Organizer" data-lang-mn="Зохион байгуулагч">Organizer</div>
+            <h3 class="member-name">Munkhtushig</h3>
+            <p class="member-bio" data-lang-en="Directing strategic operations, licensing compliance, and overarching vision for the event." data-lang-mn="Арга хэмжээний стратеги, франчайз зөвшөөрөл болон ерөнхий чиглэлийг удирдан чиглүүлэгч.">Directing strategic operations, licensing compliance, and overarching vision for the event.</p>
+          </div>
+        </div>
+
+        <!-- CO-ORGANIZER -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role" data-lang-en="Co-Organizer" data-lang-mn="Хамтран зохион байгуулагч">Co-Organizer</div>
+            <h3 class="member-name">Munkherdene</h3>
+            <p class="member-bio" data-lang-en="Coordinating department workflows, operational planning, and venue execution." data-lang-mn="Албадын үйл ажиллагаа, операци төлөвлөлт болон талбайн зохион байгуулалтыг зохицуулагч.">Coordinating department workflows, operational planning, and venue execution.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CURATION -->
+    <section class="dept-section" data-dept="curation">
+      <div class="dept-header">
+        <h2 class="dept-title" data-lang-en="Curation" data-lang-mn="Куратор">Curation</h2>
+        <div class="dept-divider"></div>
+        <span class="dept-count"><span data-lang-en="? Members" data-lang-mn="? Гишүүн">? Members</span></span>
+      </div>
+
+      <div class="team-grid">
+        <!-- CURATION MEMBER -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role" data-lang-en="Curation Team Member" data-lang-mn="Куратор багийн гишүүн">Curation Lead</div>
+            <h3 class="member-name">Anar</h3>
+            <p class="member-bio" data-lang-en="Leading speaker discovery, talk shaping, and editorial coaching for the stage." data-lang-mn="Илтгэгчдийг сонгон шалгаруулах, илтгэл бэлтгэх болон зөвлөн чиглүүлэх баг.">Leading speaker discovery, talk shaping, and editorial coaching for the stage.</p>
+          </div>
+        </div>
+
+        <!-- MEMBER ? -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role">?</div>
+            <h3 class="member-name">?</h3>
+            <p class="member-bio" data-lang-en="Team member to be revealed soon." data-lang-mn="Багийн гишүүн удахгүй зарлагдана.">Team member to be revealed soon.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEDIA & DESIGN -->
+    <section class="dept-section" data-dept="media-design">
+      <div class="dept-header">
+        <h2 class="dept-title" data-lang-en="Media & Design" data-lang-mn="Медиа ба Дизайн">Media & Design</h2>
+        <div class="dept-divider"></div>
+        <span class="dept-count"><span data-lang-en="? Members" data-lang-mn="? Гишүүн">? Members</span></span>
+      </div>
+
+      <div class="team-grid">
+        <!-- DESIGNER -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role" data-lang-en="Designer" data-lang-mn="Дизайнер">Designer</div>
+            <h3 class="member-name">Munkhjin</h3>
+            <p class="member-bio" data-lang-en="Directing visual branding, digital media assets, stage production aesthetics, and creative direction." data-lang-mn="Арга хэмжээний визуал брэнд, дижитал контент, тайзны дизайн болон бүтээлч чиглэлийг хариуцагч.">Directing visual branding, digital media assets, stage production aesthetics, and creative direction.</p>
+          </div>
+        </div>
+
+        <!-- MEMBER ? -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role">?</div>
+            <h3 class="member-name">?</h3>
+            <p class="member-bio" data-lang-en="Team member to be revealed soon." data-lang-mn="Багийн гишүүн удахгүй зарлагдана.">Team member to be revealed soon.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGISTICS -->
+    <section class="dept-section" data-dept="logistics">
+      <div class="dept-header">
+        <h2 class="dept-title" data-lang-en="Logistics" data-lang-mn="Логистик">Logistics</h2>
+        <div class="dept-divider"></div>
+        <span class="dept-count"><span data-lang-en="? Members" data-lang-mn="? Гишүүн">? Members</span></span>
+      </div>
+
+      <div class="team-grid">
+        <!-- MEMBER ? -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role">?</div>
+            <h3 class="member-name">?</h3>
+            <p class="member-bio" data-lang-en="Team member to be revealed soon." data-lang-mn="Багийн гишүүн удахгүй зарлагдана.">Team member to be revealed soon.</p>
+          </div>
+        </div>
+
+        <!-- MEMBER ? -->
+        <div class="member-card">
+          <div class="member-image-wrapper">
+            <div class="mystery-symbol">?</div>
+          </div>
+          <div class="member-info">
+            <div class="member-role">?</div>
+            <h3 class="member-name">?</h3>
+            <p class="member-bio" data-lang-en="Team member to be revealed soon." data-lang-mn="Багийн гишүүн удахгүй зарлагдана.">Team member to be revealed soon.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap footer-inner">
+      <div data-lang-en="This independent TEDx event is operated under license from TED." data-lang-mn="Энэхүү хараат бус TEDx арга хэмжээ нь TED-ээс олгосон албан ёсны франчайз эрхийн дагуу зохион байгуулагдаж байна.">This independent TEDx event is operated under license from TED.</div>
+      <div>&copy; 2026 TEDx Organizing Team. All Rights Reserved.</div>
+    </div>
+  </footer>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Mobile Drawer Menu Toggle
+    function toggleMobileMenu() {
+      const navLinks = document.getElementById('navLinks');
+      const menuBtn = document.querySelector('.mobile-menu-btn');
+      navLinks.classList.toggle('nav-active');
+      menuBtn.classList.toggle('active');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+  const menuBtn = document.getElementById('mobileMenuBtn');
+  const navLinks = document.getElementById('navLinks');
+
+  if (menuBtn && navLinks) {
+    menuBtn.addEventListener('click', () => {
+      navLinks.classList.toggle('nav-active');
+      menuBtn.classList.toggle('active');
+    });
+  }
+});
+    // Close Mobile Menu on Nav Link Click
+    document.querySelectorAll('nav.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        const navLinks = document.getElementById('navLinks');
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        if(navLinks.classList.contains('nav-active')) {
+          navLinks.classList.remove('nav-active');
+          menuBtn.classList.remove('active');
+        }
+      });
+    });
+
+    // Category Filter Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const deptSections = document.querySelectorAll('.dept-section');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const filterValue = btn.getAttribute('data-filter');
+
+          deptSections.forEach(section => {
+            if (filterValue === 'all' || section.getAttribute('data-dept') === filterValue) {
+              section.style.display = 'block';
+            } else {
+              section.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+
+    // Bilingual Translation Toggle Logic
+    let currentLang = 'en';
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'mn' : 'en';
+
+      // Update all elements containing bilingual data attributes
+      document.querySelectorAll('[data-lang-en][data-lang-mn]').forEach(el => {
+        el.textContent = el.getAttribute(`data-lang-${currentLang}`);
+      });
+
+      // Toggle EN / MN button highlight state
+      const langEnSpan = document.querySelector('.lang-en');
+      const langMnSpan = document.querySelector('.lang-mn');
+
+      if (langEnSpan && langMnSpan) {
+        if (currentLang === 'en') {
+          langEnSpan.style.color = 'var(--ted-red)';
+          langEnSpan.classList.add('active');
+          langMnSpan.style.color = 'inherit';
+          langMnSpan.classList.remove('active');
+        } else {
+          langMnSpan.style.color = 'var(--ted-red)';
+          langMnSpan.classList.add('active');
+          langEnSpan.style.color = 'inherit';
+          langEnSpan.classList.remove('active');
+        }
+      }
+    }
+  </script>
+</body>
+</html>
