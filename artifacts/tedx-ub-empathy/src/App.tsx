@@ -110,9 +110,12 @@ function Countdown() {
       [Math.floor((remaining / 1000) % 60), b('Secs', 'Секунд')],
     ] as [number, Bilingual][];
   }, [remaining]);
-  if (!remaining) return <div className="countdown"><div className="hero-kicker">{tx(b('Event is live today', 'Арга хэмжээ өнөөдөр болж байна'))}</div></div>;
+  if (!remaining) return <div className="countdown countdown-live"><span>{tx(b('Event is live today', 'Арга хэмжээ өнөөдөр болж байна'))}</span></div>;
   return <div className="countdown" aria-label="Event countdown" data-testid="status-countdown">
-    {units.map(([number, label]) => <div className="time-block" key={label.en}><strong>{String(number).padStart(2, '0')}</strong><label>{tx(label)}</label></div>)}
+    <span className="countdown-label">{tx(b('Event begins in', 'Арга хэмжээ эхлэх хүртэл'))}</span>
+    <div className="countdown-units">
+      {units.map(([number, label]) => <span className="time-item" key={label.en}><strong>{String(number).padStart(2, '0')}</strong><label>{tx(label)}</label></span>)}
+    </div>
   </div>;
 }
 
