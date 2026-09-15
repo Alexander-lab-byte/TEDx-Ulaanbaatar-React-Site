@@ -193,12 +193,12 @@ function Home() {
       <Nav heroMode />
       <main>
         <section className="hero">
-          <div className="hero-media" aria-hidden="true">
+          <div className="hero-media pl-[5px] pr-[5px]" aria-hidden="true">
             <video autoPlay muted loop playsInline preload="metadata" poster={`${media}school-campus-cinematic.png`}>
               <source src={`${media}school-hero.mp4`} type="video/mp4" />
             </video>
           </div>
-          <div className="wrap hero-content text-[24px]">
+          <div className="wrap hero-content text-[24px] ml-[660px] mr-[660px]">
             <h1 className="hero-opening-title">{tx(b('TEDx Ulaanbaatar Empathy School Youth 2026', 'TEDx Улаанбаатар Эмпати Сургуулийн Залуус 2026'))}</h1>
             <div className="hero-center-mark reveal"><img src={`${media}tedx-ub-empathy-white.png`} alt="TEDx Ulaanbaatar Empathy School Youth" /></div>
             <p className="hero-intro reveal delay-1">{tx(b('8 voices. 100 seats. One day of live student ideas, teacher perspectives, and youth-led innovation in Ulaanbaatar.', '8 дуу хоолой. 100 суудал. Улаанбаатар хотын сурагчдын идэвхи санаачилга, багш нарын үзэл бодол, залуусын инновацийг түгээх нэг өдөр.'))}</p>
@@ -221,9 +221,9 @@ function Home() {
          <section className="section schedule" id="schedule"><div className="wrap reveal"><div className="eyebrow">{tx(b('03 / Timetable', '03 / Цагийн хуваарь'))}</div><h2 className="section-title">{tx(b('Event Schedule (Coming Soon)', 'Арга хэмжээний хөтөлбөр (Тун удахгүй)'))}</h2><p className="muted">{tx(b('Click on a session below to view details.', 'Доорх хэсэгт дарж дэлгэрэнгүй хуваарийг харна уу.'))}</p><div className="schedule-list">{sessions.map(([title, time, rows], index) => <div className={`session ${openSession === index ? 'open' : ''}`} key={title.en}><button className="session-header" onClick={() => setOpenSession(openSession === index ? null : index)} aria-expanded={openSession === index} data-testid={`button-schedule-${index}`}><div><h3>{tx(title)}</h3><span className="session-badge">{time}</span></div><span className="toggle">{openSession === index ? '−' : '+'}</span></button><div className="session-items">{rows.map(([rowTime, event]) => <div className="schedule-row" key={rowTime}><div className="time">{rowTime}</div><div className="event">{tx(event)}</div></div>)}</div></div>)}</div></div></section>
           <section className="section" id="contact"><div className="wrap reveal"><div className="eyebrow">{tx(b('04 / Get In Touch', '04 / Холбоо барих'))}</div><h2 className="section-title">{tx(b('Reach Out to Our Team', 'Бидэнтэй холбогдох'))}</h2><div className="contact-grid"><div className="info-card"><h3>{tx(b('Organizers', 'Зохион байгуулагчид'))}</h3><div className="organizer"><div><strong>Munkhtushig</strong><p>{tx(b('Organizer / strategic operations', 'Зохион байгуулагч / стратеги'))}</p></div><span>01</span></div><div className="organizer"><div><strong>Munkherdene</strong><p>{tx(b('Co-organizer / venue execution', 'Хамтран зохион байгуулагч / талбай'))}</p></div><span>02</span></div><div className="socials"><a href="mailto:hello@tedxubempathy.school"><Mail size={14} />Email</a><a href="https://instagram.com" target="_blank" rel="noopener noreferrer"><Instagram size={14} />Instagram</a><a href="https://linkedin.com" target="_blank" rel="noopener noreferrer"><Linkedin size={14} />LinkedIn</a></div></div><div className="form-card"><h3>{tx(b('Send a Message', 'Зурвас илгээх'))}</h3><form onSubmit={(event) => { event.preventDefault(); setMessageSent(true); event.currentTarget.reset(); window.setTimeout(() => setMessageSent(false), 4500); }}><div className="form-field"><label htmlFor="fullName">{tx(b('Your Name', 'Таны нэр'))}</label><input id="fullName" required placeholder={tx(b('e.g. Anujin Batbayar', 'Жнь: Анужин Батбаяр'))} data-testid="input-full-name" /></div><div className="form-field"><label htmlFor="emailAddress">{tx(b('Email Address', 'И-мэйл хаяг'))}</label><input id="emailAddress" type="email" required placeholder="name@example.com" data-testid="input-email" /></div><div className="form-field"><label htmlFor="message">{tx(b('Message / Question', 'Таны зурвас'))}</label><textarea id="message" rows={4} required placeholder={tx(b('How can we help you?', 'Бид танд хэрхэн туслах вэ?'))} data-testid="input-message" /></div><button className="button" type="submit" data-testid="button-send-message"><Send size={15} />{tx(b('Send Message', 'Илгээх'))}</button>{messageSent && <div className="form-success" data-testid="status-message-sent"><Check size={15} /> {tx(b("Message received! We'll reply shortly.", 'Зурвас хүлээн авлаа! Бид удахгүй хариу өгөх болно.'))}</div>}</form></div></div></div></section>
        </main>
-       <Footer />
-       <SpeakerModal speaker={speaker} close={() => setSpeaker(null)} />
-     </>
+      <Footer />
+      <SpeakerModal speaker={speaker} close={() => setSpeaker(null)} />
+    </>
   );
 }
 
