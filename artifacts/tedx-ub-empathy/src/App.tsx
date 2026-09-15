@@ -1,4 +1,4 @@
-import { type CSSProperties, createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { type CSSProperties, type MouseEvent, createContext, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight, Check, Instagram, Linkedin, Mail, MapPin, Send, X } from 'lucide-react';
 import { Link, Route, Router as WouterRouter, Switch, useLocation } from 'wouter';
@@ -11,6 +11,7 @@ type Lang = 'en' | 'mn';
 type Bilingual = { en: string; mn: string };
 const b = (en: string, mn: string): Bilingual => ({ en, mn });
 const queryClient = new QueryClient();
+const media = `${import.meta.env.BASE_URL}media/`;
 
 const LangContext = createContext<{ lang: Lang; toggle: () => void; tx: (value: Bilingual) => string }>({
   lang: 'en',
@@ -31,16 +32,30 @@ const navItems = [
 
 function Brand() {
   return <Link href="/" className="brand" data-testid="link-brand" aria-label="TEDx Ulaanbaatar Empathy School Youth">
-    <span className="brand-mark" aria-hidden="true" />
-    <span className="brand-copy">TEDx ULAANBAATAR<small>EMPATHY SCHOOL YOUTH / 2026</small></span>
+    <img className="brand-logo-image" src={`${media}tedx-ub-empathy-white.png`} alt="TEDx Ulaanbaatar Empathy School Youth" />
   </Link>;
 }
 
 function Nav() {
   const { lang, toggle, tx } = useLang();
   const [open, setOpen] = useState(false);
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const close = () => setOpen(false);
+  const goToSection = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.includes('#')) return;
+    event.preventDefault();
+    const id = href.split('#')[1];
+    const scrollToSection = () => {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.history.replaceState(null, '', `/#${id}`);
+    };
+    if (location.split('#')[0] === '/') {
+      scrollToSection();
+    } else {
+      navigate('/');
+      window.setTimeout(scrollToSection, 120);
+    }
+  };
   return <>
     {open && <button className="drawer-shade" onClick={close} aria-label="Close navigation" data-testid="button-close-drawer" />}
     <header className="nav">
@@ -53,7 +68,7 @@ function Nav() {
           {navItems.map((item) => {
             const routeBase = location.split('#')[0];
             const active = item.href.startsWith('/#') ? routeBase === '/' : routeBase === item.href;
-            return <Link key={item.href} href={item.href} onClick={close} className={`nav-link ${item.accent ? 'apply' : ''} ${active ? 'active' : ''}`} data-testid={`link-nav-${item.label.en.toLowerCase().replaceAll(' ', '-')}`}>
+            return <Link key={item.href} href={item.href} onClick={(event) => { close(); goToSection(event, item.href); }} className={`nav-link ${item.accent ? 'apply' : ''} ${active ? 'active' : ''}`} data-testid={`link-nav-${item.label.en.toLowerCase().replaceAll(' ', '-')}`}>
               {tx(item.label)}
             </Link>;
           })}
@@ -61,7 +76,7 @@ function Nav() {
             <button className="lang-btn" onClick={toggle} aria-label="Switch language" data-testid="button-language">
               <b>{lang === 'en' ? 'EN' : 'MN'}</b><span> / {lang === 'en' ? 'MN' : 'EN'}</span>
             </button>
-            <Link className="button small" href="/#seats" onClick={close} data-testid="link-reserve-seat">{tx(b('Reserve Seat', 'Суудал захиалах'))}</Link>
+            <Link className="button small" href="/#seats" onClick={(event) => { close(); goToSection(event, '/#seats'); }} data-testid="link-reserve-seat">{tx(b('Reserve Seat', 'Суудал захиалах'))}</Link>
           </div>
         </nav>
       </div>
@@ -175,6 +190,11 @@ function Home() {
     <Nav />
     <main>
       <section className="hero">
+        <div className="hero-media" aria-hidden="true">
+          <video autoPlay muted loop playsInline preload="metadata" poster={`${media}school-campus-cinematic.png`}>
+            <source src={`${media}school-hero.mp4`} type="video/mp4" />
+          </video>
+        </div>
         <div className="wrap hero-content">
           <div className="hero-kicker reveal"><i /> TEDx ULAANBAATAR EMPATHY SCHOOL YOUTH / 2026</div>
           <h1 className="reveal delay-1">Ideas move<br /><em>when we</em> listen.</h1>
@@ -189,7 +209,8 @@ function Home() {
           <div className="eyebrow">{tx(b('01 / Event Overview', '01 / Үйл ажиллагааны тухай'))}</div><h2 className="section-title">{tx(b('Ideas Worth Spreading', 'Үнэ цэнэтэй санаануудыг түгээх'))}</h2>
           <div className="intro-grid"><div className="quote">“Empathy isn't just something you feel. <span>It's the willingness to stop, listen, and see the world through someone else's eyes.”</span></div><div className="body-copy"><p>{tx(b('We are a team of student organizers at Ulaanbaatar Empathy School creating a platform where youth voices, young innovators, and passionate educators take center stage.', 'Бид Улаанбаатар Эмпати Сургуулийн сурагчдын зохион байгуулсан баг бөгөөд залуусын дуу хоолой, шинийг санаачлагчид, хүсэл тэмүүлэлтэй сурган хүмүүжүүлэгчдийг тайзан дээр гаргах платформыг бүрдүүлж байна.'))}</p><p>{tx(b('On Saturday, October 24, 2026, our school assembly hall will bring together 100 attendees for a day of live presentations, curated TEDTalks videos, and deep conversations.', '2026 оны 10-р сарын 24-ний Бямба гарагт манай сургуулийн урлаг зааланд 100 оролцогч цугларч, амьд илтгэлүүд, сонгомол TEDTalks бичлэгүүд үзэж, гүн гүнзгий хэлэлцүүлэг өрнүүлэх болно.'))}</p></div></div>
            <div className="compliance"><h3>{tx(b('What is TEDx?', 'TEDx гэж юу вэ?'))}</h3><p>{tx(b('In the spirit of ideas worth spreading, TED has created a program called TEDx. TEDx is a program of local, self-organized events that bring people together to share a TED-like experience. Our event is called TEDxUlaanbaatar Empathy School Youth, where x = independently organized TED event. TEDTalks video and live speakers combine to spark deep discussion and connection in a small group.', 'Түгээх үнэ цэнэтэй санааг дэмжих зорилгоор TED нь TEDx хэмээх хөтөлбөрийг бий болгосон. TEDx бол орон нутгийн түвшинд бие даан зохион байгуулагддаг, хүмүүсийг нэгтгэн TED-тэй ижил туршлагыг хуваалцах хөтөлбөр юм. Бидний арга хэмжээ TEDxUlaanbaatar Empathy School Youth бөгөөд x нь бие даан зохион байгуулагдсан TED арга хэмжээ гэсэн үг. TEDTalks бичлэгүүд болон амьд илтгэгчид хосолж, гүнзгий хэлэлцүүлэг, холбоо үүсгэнэ.'))}</p><p>{tx(b('Learn more about the global ', 'Олон улсын '))}<a href="https://www.ted.com/tedx" target="_blank" rel="noopener noreferrer">TEDx Program →</a></p></div>
-          <div className="venue"><div><h3>{tx(b('Venue: Ulaanbaatar Empathy School Assembly Hall', 'Байршил: Улаанбаатар Эмпати Сургуулийн Урлаг Заал'))}</h3><p>{tx(b('Our event takes place in the main multi-purpose assembly hall of Ulaanbaatar Empathy School, equipped with modern audiovisual systems, a stage, and an interactive horseshoe-style arrangement designed to spark connection between speakers and audience members.', 'Манай арга хэмжээ Улаанбаатар Эмпати Сургуулийн орчин үеийн дуу дүрсний системтэй, тайзтай, илтгэгч болон үзэгчдийн хооронд харилцаа үүсгэхэд зориулагдсан тах хэлбэрийн зохион байгуулалттай урлаг зааланд болно.'))}</p><span className="location"><MapPin size={14} />{tx(b('Bayanzurkh District, Ulaanbaatar, Mongolia', 'Монгол Улс, Улаанбаатар хот, Баянзүрх дүүрэг'))}</span></div><div className="venue-art" aria-label="Ulaanbaatar Empathy School campus fallback" /></div>
+           <div className="venue"><div><h3>{tx(b('Venue: Ulaanbaatar Empathy School Assembly Hall', 'Байршил: Улаанбаатар Эмпати Сургуулийн Урлаг Заал'))}</h3><p>{tx(b('Our event takes place in the main multi-purpose assembly hall of Ulaanbaatar Empathy School, equipped with modern audiovisual systems, a stage, and an interactive horseshoe-style arrangement designed to spark connection between speakers and audience members.', 'Манай арга хэмжээ Улаанбаатар Эмпати Сургуулийн орчин үеийн дуу дүрсний системтэй, тайзтай, илтгэгч болон үзэгчдийн хооронд харилцаа үүсгэхэд зориулагдсан тах хэлбэрийн зохион байгуулалттай урлаг зааланд болно.'))}</p><span className="location"><MapPin size={14} />{tx(b('Bayanzurkh District, Ulaanbaatar, Mongolia', 'Монгол Улс, Улаанбаатар хот, Баянзүрх дүүрэг'))}</span></div><div className="venue-art"><img src={`${media}school-campus.jpg`} alt="Ulaanbaatar Empathy School campus" /></div></div>
+           <div className="vision-strip"><img src={`${media}ideas-change-people.png`} alt="Ideas change people. People change the world." /><div className="vision-strip-copy"><span className="eyebrow">{tx(b('The reason we gather', 'Бидний цугларах шалтгаан'))}</span><strong>{tx(b('One room. Many perspectives.', 'Нэг танхим. Олон үзэл бодол.'))}</strong></div><video autoPlay muted loop playsInline preload="metadata" aria-hidden="true"><source src={`${media}tedx-motion.mp4`} type="video/mp4" /></video></div>
           <SeatSelector />
          </div>
        </section>
@@ -204,7 +225,7 @@ function Home() {
 
 function Library() {
   const { tx } = useLang();
-  return <><Nav /><main className="page-main"><section className="page-hero"><div className="wrap reveal"><div className="eyebrow">{tx(b('Talks / Library', 'Илтгэлүүд / Сан'))}</div><div className="outline-word">COMING<br />SOON</div><h1>{tx(b('The ideas are still becoming.', 'Санаанууд одоо ч бүрэлдэж байна.'))}</h1><p>{tx(b('The full library of live ideas, student talks, and inspiration will be unlocked right here after the event concludes.', 'Арга хэмжээ дууссаны дараа сурагчдын болон зочдын бүх илтгэлийн бичлэгүүд энд байрших болно.'))}</p></div></section><section className="section"><div className="wrap"><div className="footer-cta" style={{ marginTop: 0 }}><div className="eyebrow">{tx(b('Archive in progress', 'Архив бэлтгэгдэж байна'))}</div><h2>{tx(b('14 voices. One growing archive.', '14 дуу хоолой. Өсөн нэмэгдэх нэг архив.'))}</h2><p>{tx(b('After October 24, this page becomes a home for the conversations that started in the assembly hall.', '10-р сарын 24-ний дараа энэ хуудас урлаг зааланд эхэлсэн яриануудын гэр болно.'))}</p><Link href="/#seats" className="button" data-testid="link-library-seat">{tx(b('Join the room', 'Танхимд нэгдэх'))}</Link></div></div></section></main><Footer /></>;
+  return <><Nav /><main className="page-main talks-page"><div className="wrap"><div className="coming-soon-wrapper reveal"><h1 className="aesthetic-text">{tx(b('Coming Soon', 'Тун удахгүй'))}</h1><p className="coming-soon-sub">{tx(b('The full library of live ideas, student talks, and inspiration will be unlocked right here after the event concludes.', 'Арга хэмжээ дууссаны дараа сурагчдын болон зочдын бүх илтгэлийн бичлэгүүд энд байрших болно.'))}</p></div></div></main><Footer /></>;
 }
 
 const teamMembers = [
