@@ -196,12 +196,12 @@ function Home() {
           </video>
         </div>
         <div className="wrap hero-content">
-          <div className="hero-kicker reveal"><i /> TEDx ULAANBAATAR EMPATHY SCHOOL YOUTH / 2026</div>
-          <h1 className="reveal delay-1">Ideas move<br /><em>when we</em> listen.</h1>
-          <p className="hero-intro reveal delay-2">{tx(b('14 voices. 100 seats. One day of live student ideas, teacher perspectives, and youth-led innovation in Ulaanbaatar.', '14 дуу хоолой. 100 суудал. Улаанбаатар хотын сурагчдын идэвхи санаачилга, багш нарын үзэл бодол, залуусын инновацийг түгээх нэг өдөр.'))}</p>
-          <div className="hero-row reveal delay-3"><Link href="/#seats" className="button" data-testid="link-hero-reserve">{tx(b('Reserve your seat', 'Суудлаа захиалах'))}</Link><Link href="/#speakers" className="button ghost" data-testid="link-hero-speakers">{tx(b('Meet the speakers', 'Илтгэгчидтэй танилцах'))}</Link></div>
+          <h1 className="hero-opening-title">{tx(b('TEDx Ulaanbaatar Empathy School Youth 2026', 'TEDx Улаанбаатар Эмпати Сургуулийн Залуус 2026'))}</h1>
+          <div className="hero-center-mark reveal"><img src={`${media}tedx-ub-empathy-white.png`} alt="TEDx Ulaanbaatar Empathy School Youth" /></div>
+          <p className="hero-intro reveal delay-1">{tx(b('14 voices. 100 seats. One day of live student ideas, teacher perspectives, and youth-led innovation in Ulaanbaatar.', '14 дуу хоолой. 100 суудал. Улаанбаатар хотын сурагчдын идэвхи санаачилга, багш нарын үзэл бодол, залуусын инновацийг түгээх нэг өдөр.'))}</p>
           <Countdown />
-          <div className="hero-meta"><span>{tx(b('Saturday, October 24, 2026', '2026 оны 10-р сарын 24, Бямба гараг'))}</span><b>•</b>{tx(b('Ulaanbaatar Empathy School, Mongolia', 'Улаанбаатар Эмпати Сургууль, Монгол'))}</div>
+          <div className="hero-row reveal delay-2"><Link href="/#seats" className="button" data-testid="link-hero-reserve">{tx(b('Reserve your seat', 'Суудлаа захиалах'))}</Link><Link href="/#speakers" className="button ghost" data-testid="link-hero-speakers">{tx(b('Meet the speakers', 'Илтгэгчидтэй танилцах'))}</Link></div>
+          <div className="hero-meta reveal delay-3"><span>{tx(b('Saturday, October 24, 2026', '2026 оны 10-р сарын 24, Бямба гараг'))}</span><b>•</b>{tx(b('Ulaanbaatar Empathy School, Mongolia', 'Улаанбаатар Эмпати Сургууль, Монгол'))}</div>
         </div>
       </section>
       <section className="section overview" id="about">
